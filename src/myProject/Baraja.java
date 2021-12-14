@@ -32,6 +32,7 @@ public class Baraja {
      *
      * @return number between (1,4)
      */
+
     public int getPaloCarta() {
         Random aleatorio = new Random();
         paloCarta = aleatorio.nextInt(3) + 1;

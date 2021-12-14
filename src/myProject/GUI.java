@@ -14,15 +14,15 @@ import java.awt.event.ActionListener;
  */
 public class GUI extends JFrame {
     public static final String MENSAJE_INICIO = "Bienvenido al juego de Carta Mayor"
-            + "\n Oprime el botón lanzar para iniciar el juego"
-            + "\n Si sacas una carta de mayor valor que la máquina, ganarás"
-            + "\n Si la carta de la máquina es de mayor valor que la tuya, perderás"
-            + "\n En caso de tener el mismo valor, la victoria se determinará por el palo de la carta";
+            + "\nOprime el botón lanzar para iniciar el juego"
+            + "\nSi sacas una carta de mayor valor que la máquina, ganarás"
+            + "\nSi la carta de la máquina es de mayor valor que la tuya, perderás"
+            + "\nEn caso de tener el mismo valor, la victoria se determinará por el palo de la carta";
 
     private Header headerProject;
     private JLabel barajaJugador, barajaMaquina;
     private JButton lanzar;
-    private JPanel panelCartas, panelResultados;
+    private JPanel panelJugador, panelResultados, panelMaquina, panelJuego;
     private ImageIcon imagenBaraja;
     private JTextArea resultadosJuego;
     private Escucha escucha;
@@ -36,9 +36,9 @@ public class GUI extends JFrame {
 
         //Default JFrame configuration
         this.setTitle("Juego Carta Mayor");
-        //this.setSize(200, 100);
+        //this.setSize(450, 550);
         this.pack();
-        this.setResizable(true);
+        this.setResizable(false);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,23 +62,47 @@ public class GUI extends JFrame {
         barajaJugador = new JLabel(imagenBaraja);
         barajaMaquina = new JLabel(imagenBaraja);
 
-        lanzar = new JButton("Lanzar");
-        lanzar.addActionListener(escucha);
+        panelJugador = new JPanel();
+        panelJugador.setPreferredSize(new Dimension(200, 180));
+        panelJugador.setBorder(BorderFactory.createTitledBorder("Tu carta"));
+        panelJugador.add(barajaJugador);
 
-        panelCartas = new JPanel();
-        panelCartas.setPreferredSize(new Dimension(300, 180));
-        panelCartas.setBorder(BorderFactory.createTitledBorder("Tus cartas"));
-        panelCartas.add(barajaJugador);
-        panelCartas.add(barajaMaquina);
-        panelCartas.add(lanzar);
+        //this.add(panelJugador, BorderLayout.WEST);
 
-        this.add(panelCartas, BorderLayout.CENTER);
+        panelMaquina = new JPanel();
+        panelMaquina.setBorder(BorderFactory.createTitledBorder("Carta de máquina"));
+        panelMaquina.setPreferredSize(new Dimension(200, 180));
+        panelMaquina.add(barajaMaquina);
+
+        //this.add(panelMaquina, BorderLayout.EAST);
 
         panelResultados = new JPanel();
-        panelResultados.setBorder(BorderFactory.createTitledBorder("Resultados "));
-        panelResultados.setPreferredSize(new Dimension(370, 180));
+        panelResultados.setBorder(BorderFactory.createTitledBorder("Resultados"));
+        panelResultados.setPreferredSize(new Dimension(450, 150));
+        resultadosJuego = new JTextArea(6, 31);
+        resultadosJuego.setLineWrap(true);
+        resultadosJuego.setBackground(null);
+        resultadosJuego.setWrapStyleWord(true);
+        resultadosJuego.setEditable(false);
 
-        this.add(panelResultados, BorderLayout.EAST);
+        resultadosJuego.setText(MENSAJE_INICIO);
+        panelResultados.add(resultadosJuego);
+
+        this.add(panelResultados, BorderLayout.SOUTH);
+
+        lanzar = new JButton("Lanzar");
+        lanzar.addActionListener(escucha);
+        lanzar.setPreferredSize(new Dimension(80, 100));
+
+        this.add(lanzar, BorderLayout.CENTER);
+
+        panelJuego = new JPanel();
+        panelJuego.setSize(getMinimumSize());
+        panelJuego.add(panelJugador);
+        panelJuego.add(panelMaquina);
+
+        this.add(panelJuego, BorderLayout.NORTH);
+
     }
 
     /**
@@ -103,15 +127,21 @@ public class GUI extends JFrame {
             modelCartaMayor.elegirCartas();
 
             int[] valoresCartas = modelCartaMayor.getValoresCartas();
-            String[] palosCartas = modelCartaMayor.getPalosCartas();
+            String[] palosCartasString = modelCartaMayor.getPalosCartasString();
 
-            imagenBaraja = new ImageIcon(getClass().getResource("/resources/" + valoresCartas[0] + "c.png"));
+            imagenBaraja = new ImageIcon(getClass().getResource("/resources/" + valoresCartas[0] + palosCartasString[0] + ".png"));
             barajaJugador.setIcon(imagenBaraja);
 
-            imagenBaraja = new ImageIcon(getClass().getResource("/resources/" + valoresCartas[1] + "c.png"));
+            imagenBaraja = new ImageIcon(getClass().getResource("/resources/" + valoresCartas[1] + palosCartasString[1] + ".png"));
             barajaMaquina.setIcon(imagenBaraja);
 
             modelCartaMayor.determinarJuego();
+
+            panelResultados.setBorder(BorderFactory.createTitledBorder("Resultados"));
+            resultadosJuego.setText(modelCartaMayor.getEstadoToString());
+            resultadosJuego.setRows(4);
+            resultadosJuego.setColumns(31);
+            panelResultados.add(resultadosJuego);
 
             revalidate();
             repaint();
