@@ -4,6 +4,59 @@ public class ModelCartaMayor {
     private Baraja barajaJugador, barajaMaquina;
     private int estado;
     private String estadoToString;
+    private int[] valoresCartas;
+    private int[] palosCartas;
+    private String[] palosCartasString;
+
+    public ModelCartaMayor() {
+        barajaJugador = new Baraja();
+        barajaMaquina = new Baraja();
+        valoresCartas = new int[2];
+        palosCartas = new int[2];
+
+    }
+
+    public void elegirCartas() {
+        valoresCartas[0] = barajaJugador.getValorCarta();
+        valoresCartas[1] = barajaMaquina.getValorCarta();
+        palosCartas[0] = barajaJugador.getValorCarta();
+        palosCartas[1] = barajaMaquina.getValorCarta();
+
+        switch (palosCartas[0]) {
+            case 1:
+                palosCartasString[0] = "o";
+                break;
+            case 2:
+                palosCartasString[0] = "c";
+                break;
+            case 3:
+                palosCartasString[0] = "e";
+                break;
+            case 4:
+                palosCartasString[0] = "b";
+                break;
+            default:
+                break;
+        }
+
+        switch (palosCartas[1]) {
+            case 1:
+                palosCartasString[1] = "o";
+                break;
+            case 2:
+                palosCartasString[1] = "c";
+                break;
+            case 3:
+                palosCartasString[1] = "e";
+                break;
+            case 4:
+                palosCartasString[1] = "b";
+                break;
+            default:
+                break;
+        }
+
+    }
 
     public void determinarJuego() {
         if (barajaJugador.getValorCarta() > barajaMaquina.getValorCarta()) {
@@ -50,4 +103,13 @@ public class ModelCartaMayor {
         }
         return estadoToString;
     }
+
+    public int[] getValoresCartas() {
+        return valoresCartas;
+    }
+
+    public String[] getPalosCartas() {
+        return palosCartasString;
+    }
+
 }

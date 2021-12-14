@@ -2,6 +2,8 @@ package myProject;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * This class is used for ...
@@ -36,7 +38,7 @@ public class GUI extends JFrame {
         this.setTitle("Juego Carta Mayor");
         //this.setSize(200, 100);
         this.pack();
-        this.setResizable(false);
+        this.setResizable(true);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -55,8 +57,28 @@ public class GUI extends JFrame {
         headerProject = new Header("Juego Carta Mayor", Color.BLACK);
         this.add(headerProject, BorderLayout.NORTH); //Change this line if you change JFrame Container's Layout
 
+        imagenBaraja = new ImageIcon(getClass().getResource("/resources/baraja.png"));
 
+        barajaJugador = new JLabel(imagenBaraja);
+        barajaMaquina = new JLabel(imagenBaraja);
 
+        lanzar = new JButton("Lanzar");
+        lanzar.addActionListener(escucha);
+
+        panelCartas = new JPanel();
+        panelCartas.setPreferredSize(new Dimension(300, 180));
+        panelCartas.setBorder(BorderFactory.createTitledBorder("Tus cartas"));
+        panelCartas.add(barajaJugador);
+        panelCartas.add(barajaMaquina);
+        panelCartas.add(lanzar);
+
+        this.add(panelCartas, BorderLayout.CENTER);
+
+        panelResultados = new JPanel();
+        panelResultados.setBorder(BorderFactory.createTitledBorder("Resultados "));
+        panelResultados.setPreferredSize(new Dimension(370, 180));
+
+        this.add(panelResultados, BorderLayout.EAST);
     }
 
     /**
@@ -74,7 +96,25 @@ public class GUI extends JFrame {
     /**
      * inner class that extends an Adapter Class or implements Listeners used by GUI class
      */
-    private class Escucha {
+    private class Escucha implements ActionListener {
 
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            modelCartaMayor.elegirCartas();
+
+            int[] valoresCartas = modelCartaMayor.getValoresCartas();
+            String[] palosCartas = modelCartaMayor.getPalosCartas();
+
+            imagenBaraja = new ImageIcon(getClass().getResource("/resources/" + valoresCartas[0] + "c.png"));
+            barajaJugador.setIcon(imagenBaraja);
+
+            imagenBaraja = new ImageIcon(getClass().getResource("/resources/" + valoresCartas[1] + "c.png"));
+            barajaMaquina.setIcon(imagenBaraja);
+
+            modelCartaMayor.determinarJuego();
+
+            revalidate();
+            repaint();
+        }
     }
 }
