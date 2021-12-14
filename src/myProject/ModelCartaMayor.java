@@ -7,6 +7,7 @@ public class ModelCartaMayor {
     private int[] valoresCartas;
     private int[] palosCartas;
     private String[] palosCartasString;
+    private int flag;
 
     public ModelCartaMayor() {
         cartaJugador = new Baraja();
@@ -14,6 +15,7 @@ public class ModelCartaMayor {
         valoresCartas = new int[2];
         palosCartas = new int[2];
         palosCartasString = new String[2];
+        flag = 0;
     }
 
     public void elegirCartas() {
@@ -21,6 +23,12 @@ public class ModelCartaMayor {
         palosCartas[0] = cartaJugador.getPaloCarta();
         valoresCartas[1] = cartaMaquina.getValorCarta();
         palosCartas[1] = cartaMaquina.getPaloCarta();
+
+        if (flag == 0) {
+            flag = 1;
+        } else {
+            flag = 0;
+        }
 
         switch (palosCartas[0]) {
             case 1:
@@ -72,13 +80,19 @@ public class ModelCartaMayor {
                 estado = 5;
             }
         }
+        if (flag == 0) {
+            flag = 1;
+        } else {
+            flag = 0;
+        }
+
     }
 
     public String getEstadoToString() {
         switch (estado) {
             case 1:
                 estadoToString = "Has sacado una carta con un valor mayor a la carta de la máquina "
-                    + "\n¡Has ganado!";
+                        + "\n¡Has ganado!";
                 break;
             case 2:
                 estadoToString = "Has sacado una carta con un valor menor a la carta de la máquina"
@@ -89,7 +103,7 @@ public class ModelCartaMayor {
                         + "\n¡Has ganado!";
                 break;
             case 4:
-                estadoToString = "Has sacado el mismo valor de carta que la máquina, pero ella sacó un valor de palo mejor."
+                estadoToString = "Has sacado el mismo valor de carta que la máquina, pero la máquina sacó un valor de palo mejor."
                         + "\n¡Has pérdido!";
                 break;
             case 5:
@@ -114,6 +128,10 @@ public class ModelCartaMayor {
 
     public String[] getPalosCartasString() {
         return palosCartasString;
+    }
+
+    public int getFlag() {
+        return flag;
     }
 
 }

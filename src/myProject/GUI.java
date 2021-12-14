@@ -63,7 +63,7 @@ public class GUI extends JFrame {
         barajaMaquina = new JLabel(imagenBaraja);
 
         panelJugador = new JPanel();
-        panelJugador.setPreferredSize(new Dimension(200, 180));
+        panelJugador.setPreferredSize(new Dimension(200, 260));
         panelJugador.setBorder(BorderFactory.createTitledBorder("Tu carta"));
         panelJugador.add(barajaJugador);
 
@@ -71,7 +71,7 @@ public class GUI extends JFrame {
 
         panelMaquina = new JPanel();
         panelMaquina.setBorder(BorderFactory.createTitledBorder("Carta de máquina"));
-        panelMaquina.setPreferredSize(new Dimension(200, 180));
+        panelMaquina.setPreferredSize(new Dimension(200, 260));
         panelMaquina.add(barajaMaquina);
 
         //this.add(panelMaquina, BorderLayout.EAST);
@@ -92,7 +92,8 @@ public class GUI extends JFrame {
 
         lanzar = new JButton("Lanzar");
         lanzar.addActionListener(escucha);
-        lanzar.setPreferredSize(new Dimension(80, 100));
+
+        lanzar.setMaximumSize(new Dimension(20, 100));
 
         this.add(lanzar, BorderLayout.CENTER);
 
@@ -124,24 +125,27 @@ public class GUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            modelCartaMayor.elegirCartas();
 
             int[] valoresCartas = modelCartaMayor.getValoresCartas();
             String[] palosCartasString = modelCartaMayor.getPalosCartasString();
 
-            imagenBaraja = new ImageIcon(getClass().getResource("/resources/" + valoresCartas[0] + palosCartasString[0] + ".png"));
-            barajaJugador.setIcon(imagenBaraja);
+            if (modelCartaMayor.getFlag() == 0) {
+                modelCartaMayor.elegirCartas();
 
-            imagenBaraja = new ImageIcon(getClass().getResource("/resources/" + valoresCartas[1] + palosCartasString[1] + ".png"));
-            barajaMaquina.setIcon(imagenBaraja);
+                imagenBaraja = new ImageIcon(getClass().getResource("/resources/" + valoresCartas[0] + palosCartasString[0] + ".png"));
+                barajaJugador.setIcon(imagenBaraja);
+            } else {
+                imagenBaraja = new ImageIcon(getClass().getResource("/resources/" + valoresCartas[1] + palosCartasString[1] + ".png"));
+                barajaMaquina.setIcon(imagenBaraja);
 
-            modelCartaMayor.determinarJuego();
+                modelCartaMayor.determinarJuego();
 
-            panelResultados.setBorder(BorderFactory.createTitledBorder("Resultados"));
-            resultadosJuego.setText(modelCartaMayor.getEstadoToString());
-            resultadosJuego.setRows(4);
-            resultadosJuego.setColumns(31);
-            panelResultados.add(resultadosJuego);
+                panelResultados.setBorder(BorderFactory.createTitledBorder("Resultados"));
+                resultadosJuego.setText(modelCartaMayor.getEstadoToString());
+                resultadosJuego.setRows(4);
+                resultadosJuego.setColumns(31);
+                panelResultados.add(resultadosJuego);
+            }
 
             revalidate();
             repaint();
