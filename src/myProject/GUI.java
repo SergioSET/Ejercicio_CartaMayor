@@ -90,7 +90,7 @@ public class GUI extends JFrame {
 
         this.add(panelResultados, BorderLayout.SOUTH);
 
-        lanzar = new JButton("Lanzar");
+        lanzar = new JButton("Tu turno");
         lanzar.addActionListener(escucha);
 
         lanzar.setMaximumSize(new Dimension(20, 100));
@@ -130,11 +130,18 @@ public class GUI extends JFrame {
             String[] palosCartasString = modelCartaMayor.getPalosCartasString();
 
             if (modelCartaMayor.getFlag() == 0) {
+                lanzar.setText("Turno de la máquina");
+
                 modelCartaMayor.elegirCartas();
 
                 imagenBaraja = new ImageIcon(getClass().getResource("/resources/" + valoresCartas[0] + palosCartasString[0] + ".png"));
                 barajaJugador.setIcon(imagenBaraja);
+
+                imagenBaraja = new ImageIcon(getClass().getResource("/resources/baraja.png"));
+                barajaMaquina.setIcon(imagenBaraja);
             } else {
+                lanzar.setText("Tu turno");
+
                 imagenBaraja = new ImageIcon(getClass().getResource("/resources/" + valoresCartas[1] + palosCartasString[1] + ".png"));
                 barajaMaquina.setIcon(imagenBaraja);
 
