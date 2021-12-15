@@ -2,6 +2,13 @@ package myProject;
 
 import java.util.Random;
 
+/**
+ *
+ * @version v.1.0.0 date:14/12/2021
+ * @autor Sergio Escudero Tabares sergio.escudero@correounivalle.edu.co -202040801
+ * Natalia Marin Hernandez natalia.andrea.marin@correounivalle.edu.co -202041622
+ */
+
 public class Baraja {
     private int valorCarta;
     private int paloCarta;
@@ -9,7 +16,7 @@ public class Baraja {
     /**
      * Method that generate a random value to carta
      *
-     * @return
+     * @return number between (1,12)
      */
     public int getValorCarta() {
         Random aleatorio = new Random();

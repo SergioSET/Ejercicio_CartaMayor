@@ -1,5 +1,13 @@
 package myProject;
 
+/**
+ * This class is used for ...
+ *
+ * @version v.1.0.0 date:14/12/2021
+ * @autor Sergio Escudero Tabares sergio.escudero@correounivalle.edu.co -202040801
+ * Natalia Marin Hernandez natalia.andrea.marin@correounivalle.edu.co -202041622
+ */
+
 public class ModelCartaMayor {
     private Baraja cartaJugador, cartaMaquina;
     private int estado;
@@ -9,6 +17,9 @@ public class ModelCartaMayor {
     private String[] palosCartasString;
     private int flag;
 
+    /**
+     * Class Constructor
+     */
     public ModelCartaMayor() {
         cartaJugador = new Baraja();
         cartaMaquina = new Baraja();
@@ -17,6 +28,10 @@ public class ModelCartaMayor {
         palosCartasString = new String[2];
         flag = 0;
     }
+
+    /**
+     * Method that generates the values and the suit of the cards
+     */
 
     public void elegirCartas() {
         valoresCartas[0] = cartaJugador.getValorCarta();
@@ -66,6 +81,9 @@ public class ModelCartaMayor {
 
     }
 
+    /**
+     * Method that determines the state of the game
+     */
     public void determinarJuego() {
         if (valoresCartas[0] > valoresCartas[1]) {
             estado = 1;
@@ -88,6 +106,9 @@ public class ModelCartaMayor {
 
     }
 
+    /**
+     * Method that determines the message that will be show in the resultadosJuegos JTextArea
+     */
     public String getEstadoToString() {
         switch (estado) {
             case 1:
